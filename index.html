@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>{{title}}</h1>
+				<input class="new-todo" placeholder="What needs to be done?" autofocus v-model="newTodo" @keyup.enter="addTodo">
+			</header>
+			<!-- This section should be hidden by default and shown when there are todos -->
+			<section class="main">
+				<input class="toggle-all" type="checkbox" v-model="isAll"  >
+				<label for="toggle-all" >Mark all as complete</label>
+				<ul class="todo-list">
+					
+					<li v-for="(todo,index) in filteredTodos" :class="{completed:todo.completed,editing:todo==editedTodo}">
+						<div class="view">
+							<input class="toggle" type="checkbox" v-model="todo.completed">
+							<label @dblclick="editTodo(todo)">{{todo.content}}</label>
+							<button class="destroy" @click="removeTodo(index)"></button>
+						</div>
+						<input class="edit" v-model="todo.content" 
+						v-todo-focus="todo == editedTodo" 
+						@blur="doneEdit(todo)" 
+						@keyup.enter="doneEdit(todo)" 
+						@keyup.esc="cancelEdit(todo)">
+					</li>
+				</ul>
+			</section>
+			<!-- This footer should hidden by default and shown when there are todos -->
+			<footer class="footer" v-show="todos.length">
+				<!-- This should be `0 items left` by default -->
+				<span class="todo-count"><strong>{{remain}}</strong> {{todos.length>1?'items':'item'}} left</span>
+				<!-- Remove this if you don't implement routing -->
+				<ul class="filters">
+					<li>
+						<a :class="{selected:hashName=='all'}" href="#/">All</a>
+					</li>
+					<li>
+						<a :class="{selected:hashName=='active'}" href="#/active">Active</a>
+					</li>
+					<li>
+						<a :class="{selected:hashName=='completed'}" href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ↓ -->
+				<button class="clear-completed" @click="clear" v-show="filteredCompleted.length">Clear completed</button>
+			</footer>
+		</section>
+		
+		
+		
+	</body>
+</html>
