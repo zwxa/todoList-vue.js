@@ -1,6 +1,7 @@
 # todo
+www.todomvc.com
 
-> Vue.js projiect
+> Vue.js project
 
 ## Build Setup
 
